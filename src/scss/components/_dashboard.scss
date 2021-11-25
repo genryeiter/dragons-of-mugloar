@@ -1,0 +1,10 @@
+.main-wrapper {
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  .body-wrapper {
+    flex-grow: 1;
+    overflow-x: auto;
+    background-color: #F8F9FB;
+  }
+}

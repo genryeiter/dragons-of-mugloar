@@ -2,6 +2,7 @@ import React from 'react'
 
 export const Body = () => (
     <>
-        <div className="">body</div>
+        <div className="body-wrapper">body</div>
+
     </>
 )

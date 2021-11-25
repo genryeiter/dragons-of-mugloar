@@ -10,23 +10,23 @@ import { Body } from '../ui-components/body/Body'
 
 export const Dashboard = () => (
     <>
-        <div>
+        <div className='main-wrapper'>
             <Sidebar/>
             <Body/>
+            <Switch>
+                <Route exact path={ROUTE_DASHBOARD}>
+                    <Redirect to={`${ROUTE_DASHBOARD}/tasks`}/>
+                </Route>
+                <Route path={`${ROUTE_DASHBOARD}/tasks`}>
+                    <Tasks/>
+                </Route>
+                <Route path={`${ROUTE_DASHBOARD}/shop`}>
+                    <Shop/>
+                </Route>
+                <Route path={`${ROUTE_DASHBOARD}/full-data`}>
+                    <FullData/>
+                </Route>
+            </Switch>
         </div>
-        <Switch>
-            <Route exact path={ROUTE_DASHBOARD}>
-                <Redirect to={`${ROUTE_DASHBOARD}/tasks`}/>
-            </Route>
-            <Route path={`${ROUTE_DASHBOARD}/tasks`}>
-                <Tasks/>
-            </Route>
-            <Route path={`${ROUTE_DASHBOARD}/shop`}>
-                <Shop/>
-            </Route>
-            <Route path={`${ROUTE_DASHBOARD}/full-data`}>
-                <FullData/>
-            </Route>
-        </Switch>
     </>
 )

@@ -3,33 +3,31 @@ import { ListItem } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-export const Links = ({ links }) => (
-    <ul>
+import { useRouteMatch } from 'react-router'
+
+export const Links = ({ links }) => {
+  return (<ul>
         {links.map((link) => {
+          const match = useRouteMatch(link)
+
           return (
                 <ListItem
-                key={link.url}
-                button
-                className={'li'}
-                component={NavLink}
-                to={link.url}
-                activeClassName='active'
+                    key={link.url}
+                    button
+                    className={match?.isExact ? 'active' : ''}
+                    component={NavLink}
+                    to={link.url}
+                    activeClassName='active'
                 >
                     <div>
-                    <link.icon />
-                    {link.text}
+                        <link.icon />
+                        {link.text}
                     </div>
                 </ListItem>
-                // <li className={link.active ? "active" : ""}>
-                //     <a href={link.url}>
-                //         <link.icon />
-                //         {link.text}
-                //     </a>
-                // </li>
           )
         })}
-    </ul>
-)
+    </ul>)
+}
 
 Links.propTypes = {
   links: PropTypes.node.isRequired

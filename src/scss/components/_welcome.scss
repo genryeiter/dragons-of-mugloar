@@ -1,5 +1,44 @@
-h1 {
 
+
+.wrapper {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  h1, h3 {
+    text-align: center;
+    font-weight: 400;
+    margin: 0;
+    display: flex;
+    font-size: 1.8em;
+    line-height: 40px;
+  }
+  .button-wrapper {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    a {
+      border-radius: 5px;
+      text-decoration: none;
+      color: black;
+      cursor: pointer;
+      transition: 0.5s;
+      border: 1px solid gray;
+      padding: 5px 10px;
+      margin: 10px;
+      font-size: 20px;
+    }
+    a:hover {
+      color: white;
+      background: darkred;
+      border: 1px solid darkred;
+    ;
+    }
+    button {
+      margin: 10px;
+      font-size: 20px;
+    }
+  }
 }
 
 .bg {
