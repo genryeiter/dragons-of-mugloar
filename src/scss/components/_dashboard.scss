@@ -2,9 +2,62 @@
   height: 100vh;
   display: flex;
   overflow: hidden;
+
   .body-wrapper {
     flex-grow: 1;
+    padding: 50px;
     overflow-x: auto;
     background-color: #F8F9FB;
+
+    .quick-data-background {
+      width: 80vh;
+      height: 10vh;
+      background: darkorange;
+      border-radius: 6px;
+
+      .quick-data {
+        display: flex;
+        justify-content: space-evenly;
+        height: 100%;
+        align-items: center;
+
+        .quick-data-item {
+          display: flex;
+
+          .quick-data-icon {
+            background: #f94144;
+            border-radius: 10px;
+            padding: 15px;
+
+            h3 {
+              margin: 0;
+            }
+          }
+
+          .quick-data-info {
+            align-self: center;
+            margin-left: 10px;
+
+            .header {
+
+            }
+
+            .data {
+              font-size: 20px;
+            }
+          }
+
+
+        }
+
+        .quick-data-divide {
+          width: 4px;
+          background: black;
+          border-radius: 186px;
+        }
+      }
+    }
+
+
   }
 }

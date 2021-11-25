@@ -5,8 +5,7 @@ import { ROUTE_DASHBOARD, ROUTE_HOMEPAGE, ROUTE_RULES, ROUTE_WELCOMEPAGE } from 
 import { Dashboard } from '../dashboard/Dashboard'
 import { Rules } from '../start-game/Rules'
 
-function Routing () {
-  return (
+export const Routing = () => (
         <BrowserRouter>
             <div className="container pt-4">
                 <Switch>
@@ -23,7 +22,6 @@ function Routing () {
                 </Switch>
             </div>
         </BrowserRouter>
-  )
-}
+)
 
 export default Routing

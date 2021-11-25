@@ -4,29 +4,31 @@ import { ROUTE_DASHBOARD } from '../routing/routes'
 import { Tasks } from './tasks/Tasks'
 import { Shop } from './shop/Shop'
 import { FullData } from './full-data/FullData'
-import { Sidebar } from '../ui-components/sidebar/Sidebar'
 import '../scss/style.scss'
+// import { layout } from '../ui-components/layout/layout'
+import { Sidebar } from '../ui-components/sidebar/Sidebar'
 import { Body } from '../ui-components/body/Body'
 
 export const Dashboard = () => (
     <>
         <div className='main-wrapper'>
-            <Sidebar/>
-            <Body/>
-            <Switch>
-                <Route exact path={ROUTE_DASHBOARD}>
-                    <Redirect to={`${ROUTE_DASHBOARD}/tasks`}/>
-                </Route>
-                <Route path={`${ROUTE_DASHBOARD}/tasks`}>
-                    <Tasks/>
-                </Route>
-                <Route path={`${ROUTE_DASHBOARD}/shop`}>
-                    <Shop/>
-                </Route>
-                <Route path={`${ROUTE_DASHBOARD}/full-data`}>
-                    <FullData/>
-                </Route>
-            </Switch>
+                <Sidebar/>
+                <Body>
+                    <Switch>
+                        <Route exact path={ROUTE_DASHBOARD}>
+                            <Redirect to={`${ROUTE_DASHBOARD}/tasks`}/>
+                        </Route>
+                        <Route path={`${ROUTE_DASHBOARD}/tasks`}>
+                            <Tasks/>
+                        </Route>
+                        <Route path={`${ROUTE_DASHBOARD}/shop`}>
+                            <Shop/>
+                        </Route>
+                        <Route path={`${ROUTE_DASHBOARD}/full-data`}>
+                            <FullData/>
+                        </Route>
+                    </Switch>
+                </Body>
         </div>
     </>
 )
