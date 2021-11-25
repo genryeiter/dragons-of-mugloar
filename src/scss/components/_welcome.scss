@@ -1,0 +1,17 @@
+h1 {
+
+}
+
+.bg {
+  /* The image used */
+  //background-image: url("./public/photos/welcome/background_map.jpg");
+  background-image: url("https://thumbs.dreamstime.com/b/golden-map-fantasy-world-dragon-pirate-ship-mermaid-elf-goblin-blue-golden-map-fantasy-world-dragon-pirate-ship-146156945.jpg");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

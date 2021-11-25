@@ -1,11 +1,11 @@
-import React from 'react';
-import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
-import {Welcome} from "../start-game/Welcome";
-import {ROUTE_DASHBOARD, ROUTE_HOMEPAGE, ROUTE_PROJECT, ROUTE_WELCOMEPAGE} from "./routes";
-import {Dashboard} from "../dashboard/Dashboard";
+import React from 'react'
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
+import { Welcome } from '../start-game/Welcome'
+import { ROUTE_DASHBOARD, ROUTE_HOMEPAGE, ROUTE_PROJECT, ROUTE_WELCOMEPAGE } from './routes'
+import { Dashboard } from '../dashboard/Dashboard'
 
-function Routing() {
-    return (
+function Routing () {
+  return (
         <BrowserRouter>
             <div className="container pt-4">
                 <Switch>
@@ -20,7 +20,7 @@ function Routing() {
                 </Switch>
             </div>
         </BrowserRouter>
-    );
+  )
 }
 
-export default Routing;
+export default Routing

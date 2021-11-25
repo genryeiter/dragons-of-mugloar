@@ -1,11 +1,12 @@
-import React from "react";
-import {ListItem} from "@mui/material";
-import {NavLink} from "react-router-dom";
+import React from 'react'
+import { ListItem } from '@mui/material'
+import { NavLink } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 export const Links = ({ links }) => (
     <ul>
         {links.map((link) => {
-            return (
+          return (
                 <ListItem
                 key={link.url}
                 button
@@ -25,7 +26,11 @@ export const Links = ({ links }) => (
                 //         {link.text}
                 //     </a>
                 // </li>
-            );
+          )
         })}
     </ul>
 )
+
+Links.propTypes = {
+  links: PropTypes.node.isRequired
+}

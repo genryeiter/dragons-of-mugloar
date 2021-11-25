@@ -1,11 +1,12 @@
-import {Redirect, Route, Switch} from "react-router-dom";
-import {ROUTE_DASHBOARD} from "../routing/routes";
-import {Tasks} from "./tasks/Tasks";
-import {Shop} from "./shop/Shop";
-import {FullData} from "./full-data/FullData";
-import {Sidebar} from "../ui-components/sidebar/Sidebar";
-import "../scss/style.scss";
-import {Body} from "../ui-components/body/Body";
+import React from 'react'
+import { Redirect, Route, Switch } from 'react-router-dom'
+import { ROUTE_DASHBOARD } from '../routing/routes'
+import { Tasks } from './tasks/Tasks'
+import { Shop } from './shop/Shop'
+import { FullData } from './full-data/FullData'
+import { Sidebar } from '../ui-components/sidebar/Sidebar'
+import '../scss/style.scss'
+import { Body } from '../ui-components/body/Body'
 
 export const Dashboard = () => (
     <>
