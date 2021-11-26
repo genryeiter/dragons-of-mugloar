@@ -2,20 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { ROUTE_DASHBOARD, ROUTE_RULES } from '../routing/routes'
 import '../scss/style.scss'
-
-// import { useMutation } from 'react-query'
-
-// import axios from 'axios'
+import axios from 'axios'
+import { useCookies } from 'react-cookie'
 
 export const Welcome = () => {
-  // async function fetchData () {
-  //   const response = await axios.post('https://dragonsofmugloar.com/api/v2/game/start')
-  //   console.log(response)
-  // }
+  // eslint-disable-next-line no-unused-vars
+  const [cookies, setCookie] = useCookies(['name'])
+
+  async function startGame () {
+    const response = await axios.post('https://dragonsofmugloar.com/api/v2/game/start')
+    setCookie('gameId', response, { path: '/' })
+  }
 
   return (
         <>
-            {/* <button onClick={fetchData}>start the game</button> */}
             <div className="wrapper">
                 <div className="">
                     <h1 className="">Welcome, Great Freelance Dragon Trainer!<br/>
@@ -27,9 +27,8 @@ export const Welcome = () => {
                         If you are newbie, then you can familiarize yourself with rules by clicking on the &quot;Game
                         Rules&quot; button!</h1>
 
-                    {/* <h1><a href={`${ROUTE_WELCOMEPAGE}/rules`}>check the rules</a></h1> */}
                     <div className="button-wrapper">
-                        <Link to={ROUTE_DASHBOARD}>New Game</Link>
+                        <Link onClick={startGame} to={ROUTE_DASHBOARD}>New Game</Link>
                         <Link to={ROUTE_RULES}>Game Rules</Link>
                     </div>
 

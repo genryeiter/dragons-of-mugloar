@@ -1,45 +1,50 @@
 import React from 'react'
-import { BiTask } from 'react-icons/all'
+import { MdVideogameAsset, BsFillSuitHeartFill, SiBitcoinsv, MdOutlineAssignmentTurnedIn, MdDataExploration, FaSortAmountUp, BsArrowReturnRight } from 'react-icons/all'
+import { Cookies } from 'react-cookie'
+
+const cookie = new Cookies()
 
 const fullData = [
   {
     text: 'Game ID',
-    icon: BiTask,
-    data: '999'
+    icon: MdVideogameAsset,
+    data: cookie.get('gameId')?.data?.gameId
   },
   {
     text: 'Lives',
-    icon: BiTask,
-    data: 999
+    icon: BsFillSuitHeartFill,
+    data: cookie.get('gameId')?.data?.lives
   },
   {
     text: 'Gold',
-    icon: BiTask,
-    data: 999
+    icon: SiBitcoinsv,
+    data: cookie.get('gameId')?.data?.gold
   },
   {
     text: 'Level',
-    icon: BiTask,
-    data: 999
+    icon: MdDataExploration,
+    data: cookie.get('gameId')?.data?.level
   },
   {
     text: 'Score',
-    icon: BiTask,
-    data: 999
+    icon: FaSortAmountUp,
+    data: cookie.get('gameId')?.data?.score
   },
   {
     text: 'HighScore',
-    icon: BiTask,
-    data: 999
+    icon: MdOutlineAssignmentTurnedIn,
+    data: cookie.get('gameId')?.data?.highScore
   },
   {
     text: 'Turn',
-    icon: BiTask,
-    data: 999
+    icon: BsArrowReturnRight,
+    data: cookie.get('gameId')?.data?.turn
   }
 ]
 
-export const FullData = () => (
+export const FullData = () => {
+  return (
+
     <>
         <h1>Full Data</h1>
 
@@ -49,11 +54,15 @@ export const FullData = () => (
                     <div key={el.text} className="full-data-item">
                         {el.text}
                         <el.icon/>
+                      <br/>
                         {el.data}
+                      <br/>
+                      <br/>
                     </div>
               )
             })}
 
         </div>
     </>
-)
+  )
+}

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Box, Button, Modal, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { QuickData } from '../../ui-components/quick-data/QuickData'
+import axios from 'axios'
+import { Cookies } from 'react-cookie'
 
 const rows = [
   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
@@ -27,6 +29,14 @@ const style = {
   p: 4
 }
 
+const cookie = new Cookies()
+const gameId = cookie.get('gameId')?.data?.gameId
+
+async function fetchShopList () {
+  const response = await axios.get(`https://dragonsofmugloar.com/api/v2/${gameId}/shop`)
+  console.log(response.data)
+  return response.data
+}
 export const Shop = () => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
@@ -75,6 +85,9 @@ export const Shop = () => {
         </Modal>
         <QuickData/>
         <h1>Shopping list</h1>
+        <>
+            <button onClick={fetchShopList}>fetch shop list</button>
+        </>
         <div style={{ height: 400, width: '100%' }}>
             <DataGrid
                 rows={rows}

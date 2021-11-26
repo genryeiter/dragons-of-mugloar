@@ -1,29 +1,29 @@
 import React from 'react'
 import { BiTask, GrMoney } from 'react-icons/all'
+import { Cookies } from 'react-cookie'
+
+const cookie = new Cookies()
 
 const quickDataItems = [
   {
     header: 'Gold',
     icon: GrMoney,
-    data: ''
+    data: cookie.get('gameId')?.data?.gold
   },
   {
     header: 'Lives',
     icon: BiTask,
-    data: ''
-
+    data: cookie.get('gameId')?.data?.lives
   },
   {
     header: 'Score',
     icon: BiTask,
-    data: ''
-
+    data: cookie.get('gameId')?.data?.score
   },
   {
     header: 'Turns',
     icon: BiTask,
-    data: ''
-
+    data: cookie.get('gameId')?.data?.turn
   }
 ]
 
@@ -46,7 +46,6 @@ export const QuickData = () => {
                                     </div>
                                     <div className="data">
                                         {quickDataItem.data}
-                                        999
                                     </div>
                                 </div>
 
