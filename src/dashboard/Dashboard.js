@@ -12,7 +12,8 @@ import { Cookies } from 'react-cookie'
 export const Dashboard = () => {
   const fetchGameId = () => {
     const cookie = new Cookies()
-    console.log(cookie.get('gameId').data)
+    console.log(cookie.get('gameId'))
+    console.log(cookie.get('gameStats'), 'stats')
   }
 
   return (

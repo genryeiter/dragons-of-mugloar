@@ -4,6 +4,7 @@ import { ROUTE_DASHBOARD, ROUTE_RULES } from '../routing/routes'
 import '../scss/style.scss'
 import axios from 'axios'
 import { useCookies } from 'react-cookie'
+// import { fetchTasks } from '../dashboard/tasks/Tasks'
 
 export const Welcome = () => {
   // eslint-disable-next-line no-unused-vars
@@ -11,7 +12,9 @@ export const Welcome = () => {
 
   async function startGame () {
     const response = await axios.post('https://dragonsofmugloar.com/api/v2/game/start')
-    setCookie('gameId', response, { path: '/' })
+    // await fetchTasks()
+    setCookie('gameId', response?.data?.gameId, { path: '/' })
+    setCookie('gameStats', response?.data, { path: '/' })
   }
 
   return (

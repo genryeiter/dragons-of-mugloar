@@ -14,13 +14,11 @@ const links1 = [
     text: 'Shop',
     icon: FiShoppingBag,
     url: `${ROUTE_DASHBOARD}/shop`
-
   },
   {
     text: 'Full Data',
     icon: IoMdInformationCircleOutline,
     url: `${ROUTE_DASHBOARD}/full-data`
-
   }
 ]
 

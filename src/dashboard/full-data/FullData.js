@@ -3,42 +3,45 @@ import { MdVideogameAsset, BsFillSuitHeartFill, SiBitcoinsv, MdOutlineAssignment
 import { Cookies } from 'react-cookie'
 
 const cookie = new Cookies()
+const stats = cookie.get('gameStats')
+
+console.log(cookie.get('gameStats'))
 
 const fullData = [
   {
     text: 'Game ID',
     icon: MdVideogameAsset,
-    data: cookie.get('gameId')?.data?.gameId
+    data: stats?.gameId
   },
   {
     text: 'Lives',
     icon: BsFillSuitHeartFill,
-    data: cookie.get('gameId')?.data?.lives
+    data: stats?.lives
   },
   {
     text: 'Gold',
     icon: SiBitcoinsv,
-    data: cookie.get('gameId')?.data?.gold
+    data: stats?.gold
   },
   {
     text: 'Level',
     icon: MdDataExploration,
-    data: cookie.get('gameId')?.data?.level
+    data: stats?.level
   },
   {
     text: 'Score',
     icon: FaSortAmountUp,
-    data: cookie.get('gameId')?.data?.score
+    data: cookie.get('gameStats')?.score
   },
   {
     text: 'HighScore',
     icon: MdOutlineAssignmentTurnedIn,
-    data: cookie.get('gameId')?.data?.highScore
+    data: cookie.get('gameStats')?.highScore
   },
   {
     text: 'Turn',
     icon: BsArrowReturnRight,
-    data: cookie.get('gameId')?.data?.turn
+    data: cookie.get('gameStats')?.turn
   }
 ]
 

@@ -1,33 +1,41 @@
-import React from 'react'
-import { BiTask, GrMoney } from 'react-icons/all'
+import React, { useEffect } from 'react'
+import { BsArrowReturnRight, BsFillSuitHeartFill, FaSortAmountUp, GrMoney } from 'react-icons/all'
 import { Cookies } from 'react-cookie'
 
 const cookie = new Cookies()
+let stats = cookie.get('gameStats')
+
+const refreshGameStats = () => {
+  stats = cookie.get('gameStats')
+}
 
 const quickDataItems = [
   {
     header: 'Gold',
     icon: GrMoney,
-    data: cookie.get('gameId')?.data?.gold
+    data: stats?.gold
   },
   {
     header: 'Lives',
-    icon: BiTask,
-    data: cookie.get('gameId')?.data?.lives
+    icon: BsFillSuitHeartFill,
+    data: stats?.lives
   },
   {
     header: 'Score',
-    icon: BiTask,
-    data: cookie.get('gameId')?.data?.score
+    icon: FaSortAmountUp,
+    data: stats?.score
   },
   {
     header: 'Turns',
-    icon: BiTask,
-    data: cookie.get('gameId')?.data?.turn
+    icon: BsArrowReturnRight,
+    data: stats?.turn
   }
 ]
 
 export const QuickData = () => {
+  useEffect(() => {
+    refreshGameStats()
+  })
   return (
         <>
             <div className="quick-data-background">

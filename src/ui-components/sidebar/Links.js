@@ -2,7 +2,6 @@ import React from 'react'
 import { ListItem } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
-
 import { useRouteMatch } from 'react-router'
 
 export const Links = ({ links }) => {
@@ -17,6 +16,7 @@ export const Links = ({ links }) => {
                     className={match?.isExact ? 'active' : ''}
                     component={NavLink}
                     to={link.url}
+                    // onClick={link.fetch}
                     activeClassName='active'
                 >
                     <div>
