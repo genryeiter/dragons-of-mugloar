@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import memoji from './rexj-memoji-smile.png'
 import firebase from 'firebase/compat'
 import { firebaseConfig } from '../../config'
+import { BiCoin, GrScorecard, IoFootstepsOutline, RiHandHeartLine } from 'react-icons/all'
 
 firebase.initializeApp(firebaseConfig)
 
@@ -16,34 +17,40 @@ export const QuickData = () => {
       setData(snapshot.val())
     })
     console.log(quickDataItems)
+    console.log(dataz)
   }, [data])
 
   const styles = {
-    borderRight: '1px solid lightgray'
+    borderLeft: '1px solid rgba(224, 224, 224, 1)',
+    paddingLeft: 20
   }
   quickDataItems = [
     {
       header: 'Gold',
       info: 'Your earned amount of gold',
       data: dataz.gold,
-      style: styles
+      icon: BiCoin
     },
     {
       header: 'Lives',
       info: 'Your remaining lives',
       data: dataz.lives,
+      icon: RiHandHeartLine,
       style: styles
     },
     {
       header: 'Turns',
       info: 'Number of moves you made',
       data: dataz.turn,
+      icon: IoFootstepsOutline,
       style: styles
     },
     {
       header: 'Score',
       info: 'Your amount of points earned',
-      data: dataz.score
+      icon: GrScorecard,
+      data: dataz.score,
+      style: styles
     }
   ]
   return (
@@ -54,7 +61,7 @@ export const QuickData = () => {
                         <img src={memoji} width={65}/>
                     </div>
                     <div className="">
-                        <b>Welcome Back,&nbsp;</b> Brave Dragon Trainer!
+                        <b>Welcome Back,&nbsp;</b>Brave Dragon Trainer!
                         <div className="question">Are you ready to work today?</div>
                     </div>
                 </div>
@@ -68,8 +75,13 @@ export const QuickData = () => {
                                     <div className="header">
                                         {quickDataItem.header}
                                     </div>
+                                    <div className="data-wrapper">
                                     <div className="data">
-                                        <b> {quickDataItem.data}</b>
+                                        <b>{quickDataItem.data}</b>
+                                    </div>
+                                    <div className="icon">
+                                        <quickDataItem.icon />
+                                    </div>
                                     </div>
                                     <div className="small-info">
                                         {quickDataItem.info}

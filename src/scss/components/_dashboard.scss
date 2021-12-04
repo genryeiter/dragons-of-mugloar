@@ -35,8 +35,8 @@
       margin-bottom: 40px;
 
       .quick-data {
-        border-top: 1px solid lightgray;
-        border-bottom: 1px solid lightgray;
+        border-top: 1px solid rgba(224, 224, 224, 1);
+        border-bottom: 1px solid rgba(224, 224, 224, 1);
         display: flex;
         justify-content: space-between;
         height: 100%;
@@ -45,7 +45,6 @@
         .quick-data-item {
           display: flex;
           width: 25%;
-          margin-left: 20px;
 
           .quick-data-info {
             align-self: center;
@@ -54,9 +53,26 @@
             .header {
             }
 
-            .data {
-              font-size: 30px;
-              margin: 5px 0px;
+            .data-wrapper {
+              display: flex;
+              align-items: center;
+
+              .data {
+                font-size: 30px;
+                margin: 5px 0px;
+              }
+
+              .icon {
+                background: #ff8366;
+                padding: 3px 6px;
+                margin-left: 10px;
+                border-radius: 7px;
+
+                svg {
+                  width: 16px;
+                  height: 16px;
+                }
+              }
             }
 
             .small-info {
@@ -64,18 +80,8 @@
               opacity: 50%;
             }
           }
-
-
-        }
-
-        .quick-data-divide {
-          width: 4px;
-          background: black;
-          border-radius: 186px;
         }
       }
     }
-
-
   }
 }

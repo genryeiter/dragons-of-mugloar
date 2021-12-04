@@ -1,13 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import {
-  MdVideogameAsset,
-  BsFillSuitHeartFill,
-  SiBitcoinsv,
-  MdOutlineAssignmentTurnedIn,
-  MdDataExploration,
-  FaSortAmountUp,
-  BsArrowReturnRight
-} from 'react-icons/all'
 import { Cookies } from 'react-cookie'
 import firebase from 'firebase/compat'
 
@@ -28,54 +19,47 @@ export const FullData = () => {
   const fullData = [
     {
       text: 'Game ID',
-      icon: MdVideogameAsset,
       data: cookie.get('gameId')
     },
     {
       text: 'Lives',
-      icon: BsFillSuitHeartFill,
       data: dataz?.lives
     },
     {
       text: 'Gold',
-      icon: SiBitcoinsv,
       data: dataz?.gold
     },
     {
       text: 'Level',
-      icon: MdDataExploration,
       data: dataz?.level
     },
     {
       text: 'Score',
-      icon: FaSortAmountUp,
       data: dataz?.score
     },
     {
       text: 'HighScore',
-      icon: MdOutlineAssignmentTurnedIn,
       data: dataz?.gameHighScore === undefined ? dataz?.score : dataz?.gameHighScore < dataz.score ? dataz.score : dataz.gameHighScore
     },
     {
       text: 'Turn',
-      icon: BsArrowReturnRight,
       data: dataz?.turn
     }
   ]
   return (
         <>
-            <h1>Full Data</h1>
+            <h1>My Data</h1>
             <div className="full-data-wrapper">
                 {}
                 {fullData.map((el) => {
                   return (
                         <div key={el.text} className="full-data-item">
-                            {el.text}
-                            <el.icon/>
-                            <br/>
+                          <div className="data-header">
+                            {el.text} &nbsp;- &nbsp;
+                          </div>
+                          <div className="data">
                             {el.data}
-                            <br/>
-                            <br/>
+                          </div>
                         </div>
                   )
                 })}

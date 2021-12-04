@@ -2,8 +2,17 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  border-radius: 15px;
   transform: translate(-50%, -50%);
   width: 400px;
+  padding: 17px;
   background: white;
-  border: 2px solid #000;
+  #modal-modal-title {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+  }
+  #modal-modal-description {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 400
+  }
 }

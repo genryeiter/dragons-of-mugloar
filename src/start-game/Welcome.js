@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ROUTE_DASHBOARD, ROUTE_RULES } from '../routing/routes'
+import { ROUTE_DASHBOARD } from '../routing/routes'
 import '../scss/style.scss'
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
 import { database } from '../config'
+import background from './bg.jpeg'
+import logo from './logo.png'
 
 export const Welcome = () => {
   const cookie = new Cookies()
@@ -17,24 +19,33 @@ export const Welcome = () => {
     })
   }
 
+  const style = {
+    backgroundImage: `url(${background})`
+  }
+
   return (
         <>
-            <div className="wrapper">
+            <div style={style} className="wrapper">
+
                 <div className="">
+                    <div className="logo-wrapper">
+                        <img src={logo} alt=""/>
+                    </div>
                     <h1 className="">Welcome, Great Freelance Dragon Trainer!<br/>
 
                         Do you have a desire to use your dragon for profitable purposes? <br/>
 
-                        If you are already familiar with the rules, then click on the button &quot;New Game&quot;<br/>
+                        Then quickly click on the &quot;New Game&quot; and start making money on your dragon right now!
 
-                        If you are newbie, then you can familiarize yourself with rules by clicking on the &quot;Game
-                        Rules&quot; button!</h1>
+                    </h1>
 
                     <div className="button-wrapper">
                         <Link onClick={startGame} to={ROUTE_DASHBOARD}>New Game</Link>
-                        <Link to={ROUTE_RULES}>Game Rules</Link>
                     </div>
-
+                    <div className="copyright">
+                        Copyright © 2021. Drawings by Nele Sergejeva, editing Jaan Pullerits. <br/>
+                        Background photo by Sergei Akulich on Unsplash. All rights reserved.
+                    </div>
                 </div>
 
             </div>

@@ -1,56 +1,65 @@
 
-
 .wrapper {
   display: flex;
   height: 100vh;
   justify-content: center;
   align-items: center;
-  h1, h3 {
+  background-size: cover;
+  background-attachment: fixed;
+  .logo-wrapper {
+    text-align: center;
+    img {
+      width: 70%;
+    }
+  }
+  h1 {
     text-align: center;
     font-weight: 400;
     margin: 0;
+    color: wheat;
     display: flex;
     font-size: 1.8em;
     line-height: 40px;
   }
+
   .button-wrapper {
     margin-top: 35px;
     display: flex;
     justify-content: center;
+
     a {
       border-radius: 5px;
       text-decoration: none;
-      color: black;
+      color: wheat;
       cursor: pointer;
       transition: 0.5s;
       border: 1px solid gray;
       padding: 5px 10px;
       margin: 10px;
-      font-size: 20px;
+      font-size: 30px;
     }
+
     a:hover {
       color: white;
       background: darkred;
-      border: 1px solid darkred;
-    ;
+      border: 1px solid darkred;;
     }
+
     button {
       margin: 10px;
       font-size: 20px;
     }
   }
-}
 
-.bg {
-  /* The image used */
-  //background-image: url("./public/photos/welcome/background_map.jpg");
-  background-image: url("https://thumbs.dreamstime.com/b/golden-map-fantasy-world-dragon-pirate-ship-mermaid-elf-goblin-blue-golden-map-fantasy-world-dragon-pirate-ship-146156945.jpg");
-
-  /* Full height */
-  height: 100%;
-
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  .copyright {
+    position: absolute;
+    bottom: 15px;
+    color: white;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    width: max-content;
+    margin-right: auto;
+    font-size: 13px;
+  }
 }

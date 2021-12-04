@@ -21,7 +21,20 @@ export const Tasks = () => {
   firebase.database().ref('data').on('value', (snapshot) => {
     gameId = snapshot.val().gameId
   })
-
+  const fetchTasks = () => {
+    fetch(`https://dragonsofmugloar.com/api/v2/${gameIdz}/messages`)
+      .then(result => {
+        return result.json()
+      })
+      .then(data => {
+        setTasks(data)
+        if (data?.status === 'Game Over') {
+          new Cookies().remove('gameId')
+        }
+        console.log(data)
+      })
+      .catch(e => console.log(e))
+  }
   useEffect(() => {
     const fetchId = (gameId) => {
       firebase.database().ref('data').on('value', (snapshot) => {
@@ -35,20 +48,6 @@ export const Tasks = () => {
     console.log(id)
     console.log(gameId)
 
-    const fetchTasks = () => {
-      fetch(`https://dragonsofmugloar.com/api/v2/${gameIdz}/messages`)
-        .then(result => {
-          return result.json()
-        })
-        .then(data => {
-          setTasks(data)
-          if (data?.status === 'Game Over') {
-            new Cookies().remove('gameId')
-          }
-          console.log(data)
-        })
-        .catch(e => console.log(e))
-    }
     fetchTasks()
     modifyTasks()
     console.log(gameIdz)
@@ -98,17 +97,17 @@ export const Tasks = () => {
   const history = useHistory()
 
   const columns = [
-    { field: 'message', headerName: 'message', width: 500 },
-    { field: 'probability', headerName: 'probability', width: 150 },
-    { field: 'expiresIn', headerName: 'expiration', width: 150 },
+    { field: 'message', headerName: 'Tasks', width: 500 },
+    { field: 'probability', headerName: 'Probability', width: 150 },
+    { field: 'expiresIn', headerName: 'Task expiration', width: 150 },
     {
       field: 'reward',
-      headerName: 'reward',
-      width: 150
+      headerName: 'Reward',
+      width: 100
     },
     {
       field: 'action',
-      headerName: 'Action',
+      headerName: '',
       sortable: false,
       renderCell: (params) => {
         const onClick = async (e) => {
@@ -122,7 +121,7 @@ export const Tasks = () => {
               console.log('blya')
             })
           // if (lives > 0) {
-          //   fetchTasks()
+          fetchTasks()
           // }
           e.stopPropagation()
           handleOpen()
@@ -151,7 +150,6 @@ export const Tasks = () => {
                     </Typography>
                 </Box>
             </Modal>
-
             <QuickData/>
             <h1>List of Tasks</h1>
             <div style={{ height: 400, width: '100%' }}>
