@@ -9,7 +9,7 @@ import { database, firebaseConfig } from '../../config'
 import { ROUTE_WELCOMEPAGE } from '../../routing/routes'
 import { useHistory } from 'react-router-dom'
 import firebase from 'firebase/compat'
-import { modifyTasks } from './util'
+import { fetchTasks, modifyTasks, solveTask } from './util'
 
 firebase.initializeApp(firebaseConfig)
 
@@ -24,20 +24,20 @@ export const Tasks = () => {
   firebase.database().ref('data').on('value', (snapshot) => {
     gameId = snapshot.val().gameId
   })
-  const fetchTasks = () => {
-    fetch(`https://dragonsofmugloar.com/api/v2/${gameIdz}/messages`)
-      .then(result => {
-        return result.json()
-      })
-      .then(data => {
-        setTasks(data)
-        if (data?.status === 'Game Over') {
-          new Cookies().remove('gameId')
-        }
-        console.log(data)
-      })
-      .catch(e => console.log(e))
-  }
+  // const fetchTasks = () => {
+  //   fetch(`https://dragonsofmugloar.com/api/v2/${gameIdz}/messages`)
+  //     .then(result => {
+  //       return result.json()
+  //     })
+  //     .then(data => {
+  //       setTasks(data)
+  //       if (data?.status === 'Game Over') {
+  //         new Cookies().remove('gameId')
+  //       }
+  //       console.log(data)
+  //     })
+  //     .catch(e => console.log(e))
+  // }
   useEffect(() => {
     const fetchId = (gameId) => {
       firebase.database().ref('data').on('value', (snapshot) => {
@@ -51,12 +51,13 @@ export const Tasks = () => {
     console.log(id)
     console.log(gameId)
 
-    fetchTasks()
-    modifyTasks(tasks)
+    fetchTasks(gameIdz).then(res => { return setTasks(res) })
+    // modifyTasks(ta)
     console.log(gameIdz)
     console.log(gameId)
   }, [deps])
 
+  // eslint-disable-next-line no-unused-vars
   const [tasks, setTasks] = useState([])
   const [open, setOpen] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -100,8 +101,8 @@ export const Tasks = () => {
       headerName: '',
       sortable: false,
       renderCell: (params) => {
-        const onClick = async (e) => {
-          await axios.post(`https://dragonsofmugloar.com/api/v2/${gameIdz}/solve/${params.row.adId}`)
+        const onClick = (e) => {
+          axios.post(`https://dragonsofmugloar.com/api/v2/${gameIdz}/solve/${params.row.adId}`)
             .then(function (res) {
               database.ref('data').update(res.data)
               setSuccess(res.data.success)
@@ -110,6 +111,7 @@ export const Tasks = () => {
               console.log(error)
               console.log('blya')
             })
+          solveTask(gameIdz, params.row.adId)
           // if (lives > 0) {
           fetchTasks()
           // }
