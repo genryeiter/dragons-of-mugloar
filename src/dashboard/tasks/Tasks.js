@@ -2,20 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { QuickData } from '../../ui-components/quick-data/QuickData'
 import { Cookies } from 'react-cookie'
 import { DataGrid } from '@mui/x-data-grid'
-import { Box, Button, Modal, Typography } from '@mui/material'
+import { Box, Button, Modal, Stack, Typography } from '@mui/material'
 import axios from 'axios'
 import '../../scss/style.scss'
 import { database, firebaseConfig } from '../../config'
 import { ROUTE_WELCOMEPAGE } from '../../routing/routes'
 import { useHistory } from 'react-router-dom'
 import firebase from 'firebase/compat'
+import { modifyTasks } from './util'
+
+firebase.initializeApp(firebaseConfig)
+
 const deps = []
 
 export const Tasks = () => {
-  firebase.initializeApp(firebaseConfig)
-  const [id, setId] = useState({})
   const cookie = new Cookies()
   const gameIdz = cookie.get('gameId')
+  const [id, setId] = useState({})
   let gameId = {}
 
   firebase.database().ref('data').on('value', (snapshot) => {
@@ -49,23 +52,10 @@ export const Tasks = () => {
     console.log(gameId)
 
     fetchTasks()
-    modifyTasks()
+    modifyTasks(tasks)
     console.log(gameIdz)
     console.log(gameId)
   }, [deps])
-
-  const modifyTasks = () => {
-    if (tasks.status === 'Game Over') {
-      console.log('Ggame OVer')
-    } else {
-      tasks?.map((el) => {
-        el.id = el.adId
-        return el
-      })
-      console.log(tasks, 'tasks')
-      return tasks
-    }
-  }
 
   const [tasks, setTasks] = useState([])
   const [open, setOpen] = useState(false)
@@ -155,7 +145,15 @@ export const Tasks = () => {
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
                     LoadingOverlay
-                    rows={tasks.status === 'Game Over' ? [] : modifyTasks()}
+                    rows={tasks.status === 'Game Over' ? [] : modifyTasks(tasks)}
+                    NoRowsOverlay={() => { return <button>test</button> }}
+                    components={{
+                      NoRowsOverlay: () => (
+                          <Stack height="100%" alignItems="center" justifyContent="center">
+                            <button onClick={fetchTasks()}>Tasks Fetch</button>
+                          </Stack>
+                      )
+                    }}
                     columns={columns}
                     pageSize={5}
                     disableColumnSelector

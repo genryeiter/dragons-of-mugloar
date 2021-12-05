@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
-import { Box, Button, Modal, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Box, Button, Modal, Stack, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { QuickData } from '../../ui-components/quick-data/QuickData'
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
 import useAxios from 'axios-hooks'
 import { database } from '../../config'
+import { fetchShopList } from './utils'
 
 const cookie = new Cookies()
 const gameId = cookie.get('gameId')
 
 export const Shop = () => {
   const [open, setOpen] = useState(false)
+  const [shopList, setShopList] = useState([])
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const [shoppingSuccess, setShoppingSuccess] = useState(false)
@@ -19,6 +21,11 @@ export const Shop = () => {
         `https://dragonsofmugloar.com/api/v2/${gameId}/shop`
   )
 
+  useEffect(() => {
+    fetchShopList().then((res) => {
+      setShopList(res)
+    })
+  }, [])
   const columns = [
     { field: 'name', headerName: 'Item Name', width: 150 },
     {
@@ -73,8 +80,15 @@ export const Shop = () => {
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
                     LoadingOverlay
-                    rows={data}
+                    rows={shopList === [] ? data : shopList}
                     columns={columns}
+                    components={{
+                      NoRowsOverlay: () => (
+                            <Stack height="100%" alignItems="center" justifyContent="center">
+                                <button>Shop List Fetch</button>
+                            </Stack>
+                      )
+                    }}
                     pageSize={5}
                     disableColumnSelector
                     disableSelectionOnClick
