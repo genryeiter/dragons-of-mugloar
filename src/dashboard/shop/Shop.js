@@ -6,7 +6,7 @@ import axios from 'axios'
 import { Cookies } from 'react-cookie'
 import useAxios from 'axios-hooks'
 import { database } from '../../config'
-import { fetchShopList } from './utils'
+import { buyShopItem, fetchShopList } from './utils'
 
 const cookie = new Cookies()
 const gameId = cookie.get('gameId')
@@ -49,6 +49,7 @@ export const Shop = () => {
             }).catch(function (error) {
               console.log(error, 'buying item error')
             })
+          buyShopItem(gameId, params.row.id)
           e.stopPropagation()
           handleOpen()
         }

@@ -3,7 +3,6 @@ import { QuickData } from '../../ui-components/quick-data/QuickData'
 import { Cookies } from 'react-cookie'
 import { DataGrid } from '@mui/x-data-grid'
 import { Box, Button, Modal, Stack, Typography } from '@mui/material'
-import axios from 'axios'
 import '../../scss/style.scss'
 import { database, firebaseConfig } from '../../config'
 import { ROUTE_WELCOMEPAGE } from '../../routing/routes'
@@ -18,50 +17,15 @@ const deps = []
 export const Tasks = () => {
   const cookie = new Cookies()
   const gameIdz = cookie.get('gameId')
-  const [id, setId] = useState({})
-  let gameId = {}
-
-  firebase.database().ref('data').on('value', (snapshot) => {
-    gameId = snapshot.val().gameId
-  })
-  // const fetchTasks = () => {
-  //   fetch(`https://dragonsofmugloar.com/api/v2/${gameIdz}/messages`)
-  //     .then(result => {
-  //       return result.json()
-  //     })
-  //     .then(data => {
-  //       setTasks(data)
-  //       if (data?.status === 'Game Over') {
-  //         new Cookies().remove('gameId')
-  //       }
-  //       console.log(data)
-  //     })
-  //     .catch(e => console.log(e))
-  // }
-  useEffect(() => {
-    const fetchId = (gameId) => {
-      firebase.database().ref('data').on('value', (snapshot) => {
-        gameId = snapshot.val().gameId
-        console.log(gameId)
-        setId(gameId)
-      })
-    }
-
-    fetchId()
-    console.log(id)
-    console.log(gameId)
-
-    fetchTasks(gameIdz).then(res => { return setTasks(res) })
-    // modifyTasks(ta)
-    console.log(gameIdz)
-    console.log(gameId)
-  }, [deps])
-
-  // eslint-disable-next-line no-unused-vars
   const [tasks, setTasks] = useState([])
   const [open, setOpen] = useState(false)
   const [success, setSuccess] = useState(false)
   const [lives, setLives] = useState(1)
+  useEffect(() => {
+    fetchTasks(gameIdz).then(res => { return setTasks(res) })
+    // modifyTasks(ta)
+    console.log(gameIdz)
+  }, [deps])
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => {
@@ -71,7 +35,6 @@ export const Tasks = () => {
       firebase.database().ref('data').on('value', (snapshot) => {
         highScore = snapshot.val().score
       })
-      tasks.status = ''
       database.ref('data').update({
         gold: 0,
         level: 0,
@@ -102,19 +65,12 @@ export const Tasks = () => {
       sortable: false,
       renderCell: (params) => {
         const onClick = (e) => {
-          axios.post(`https://dragonsofmugloar.com/api/v2/${gameIdz}/solve/${params.row.adId}`)
-            .then(function (res) {
-              database.ref('data').update(res.data)
-              setSuccess(res.data.success)
-              setLives(res.data.lives)
-            }).catch(function (error) {
-              console.log(error)
-              console.log('blya')
-            })
-          solveTask(gameIdz, params.row.adId)
-          // if (lives > 0) {
-          fetchTasks()
-          // }
+          solveTask(gameIdz, params.row.adId).then(res => {
+            console.log(res)
+            setSuccess(res?.success)
+            setLives(res?.lives)
+          })
+          fetchTasks(gameIdz)
           e.stopPropagation()
           handleOpen()
         }
@@ -147,12 +103,12 @@ export const Tasks = () => {
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
                     LoadingOverlay
-                    rows={tasks.status === 'Game Over' ? [] : modifyTasks(tasks)}
+                    rows={tasks?.status === 'Game Over' ? [] : modifyTasks(tasks)}
                     NoRowsOverlay={() => { return <button>test</button> }}
                     components={{
                       NoRowsOverlay: () => (
                           <Stack height="100%" alignItems="center" justifyContent="center">
-                            <button onClick={fetchTasks()}>Tasks Fetch</button>
+                            <button onClick={fetchTasks(gameIdz)}>Tasks Fetch</button>
                           </Stack>
                       )
                     }}

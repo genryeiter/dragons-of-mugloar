@@ -41,13 +41,14 @@
       border: 1px solid gray;
       padding: 5px 10px;
       margin: 10px;
+      background: rgba(0, 0, 0, 0.3);
       font-size: 30px;
     }
 
     a:hover {
       color: white;
       background: darkred;
-      border: 1px solid darkred;;
+      border: 1px solid darkred;
     }
 
     button {
