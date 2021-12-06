@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { database } from '../../config'
+import 'regenerator-runtime/runtime.js'
 
 export const fetchTasks = async (gameId) => {
   if (gameId !== '') {
