@@ -1,5 +1,6 @@
-import {buyShopItem, fetchShopList} from './utils'
+import { buyShopItem, fetchShopList } from './utils'
 import axios from 'axios'
+import 'regenerator-runtime/runtime.js'
 jest.mock('axios')
 
 it('Fetches Shop List', async () => {

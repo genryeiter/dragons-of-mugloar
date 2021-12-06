@@ -1,5 +1,6 @@
 import { fetchTasks, modifyTasks, solveTask } from './util'
 import axios from 'axios'
+import 'regenerator-runtime/runtime.js'
 jest.mock('axios')
 
 it('Fetches Tasks List', async () => {
