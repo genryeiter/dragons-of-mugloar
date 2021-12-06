@@ -1,54 +1,51 @@
 import React, { useEffect, useState } from 'react'
 import { QuickData } from '../../ui-components/quick-data/QuickData'
-import { Cookies } from 'react-cookie'
 import { DataGrid } from '@mui/x-data-grid'
 import { Box, Button, Modal, Stack, Typography } from '@mui/material'
 import '../../scss/style.scss'
 import { database, firebaseConfig } from '../../config'
-import { ROUTE_WELCOMEPAGE } from '../../routing/routes'
 import { useHistory } from 'react-router-dom'
 import firebase from 'firebase/compat'
-import { fetchTasks, modifyTasks, solveTask } from './util'
+import { fetchTasks, modifyTasks, solveTask } from './tasks-utils'
+import { ROUTE_INIT } from '../../routing/routes'
 
 firebase.initializeApp(firebaseConfig)
 
-const deps = []
-
 export const Tasks = () => {
-  const cookie = new Cookies()
-  const gameIdz = cookie.get('gameId')
+  const history = useHistory()
   const [tasks, setTasks] = useState([])
+  const [penis, setPenis] = useState({})
   const [open, setOpen] = useState(false)
   const [success, setSuccess] = useState(false)
   const [lives, setLives] = useState(1)
-  useEffect(() => {
-    fetchTasks(gameIdz).then(res => { return setTasks(res) })
-    // modifyTasks(ta)
-    console.log(gameIdz)
-  }, [deps])
-
   const handleOpen = () => setOpen(true)
   const handleClose = () => {
-    if (lives === 0) {
-      new Cookies().remove('gameId')
-      let highScore = {}
-      firebase.database().ref('data').on('value', (snapshot) => {
-        highScore = snapshot.val().score
-      })
-      database.ref('data').update({
-        gold: 0,
-        level: 0,
-        lives: 3,
-        score: 0,
-        gameHighScore: highScore,
-        gameId: '',
-        turn: 0
-      })
-      history.push(ROUTE_WELCOMEPAGE)
-    }
+    firebase.database().ref('data').on('value', (snapshot) => {
+      if (lives === 0) {
+        database.ref('data').update({
+          gold: 0,
+          level: 0,
+          lives: 3,
+          score: 0,
+          gameHighScore: snapshot.val().score,
+          turn: 0
+        })
+        history.push(ROUTE_INIT)
+      }
+    })
     setOpen(false)
   }
-  const history = useHistory()
+
+  useEffect(async () => {
+    await database.ref('data').on('value', snapshot => {
+      setPenis(snapshot.val().gameId)
+      if (snapshot.val().lives > 0) {
+        fetchTasks(penis).then(r => {
+          setTasks(modifyTasks(r))
+        })
+      }
+    })
+  }, [penis])
 
   const columns = [
     { field: 'message', headerName: 'Tasks', width: 500 },
@@ -65,12 +62,18 @@ export const Tasks = () => {
       sortable: false,
       renderCell: (params) => {
         const onClick = (e) => {
-          solveTask(gameIdz, params.row.adId).then(res => {
+          solveTask(penis, params.row.adId).then(res => {
             console.log(res)
             setSuccess(res?.success)
             setLives(res?.lives)
+            console.log(res?.lives)
+            console.log(res?.success)
+            if (res?.lives > 0) {
+              fetchTasks(penis).then((res) => {
+                setTasks(modifyTasks(res))
+              })
+            }
           })
-          fetchTasks(gameIdz)
           e.stopPropagation()
           handleOpen()
         }
@@ -103,13 +106,12 @@ export const Tasks = () => {
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
                     LoadingOverlay
-                    rows={tasks?.status === 'Game Over' ? [] : modifyTasks(tasks)}
-                    NoRowsOverlay={() => { return <button>test</button> }}
+                    rows={tasks === [] ? [] : tasks}
                     components={{
                       NoRowsOverlay: () => (
-                          <Stack height="100%" alignItems="center" justifyContent="center">
-                            <button onClick={fetchTasks(gameIdz)}>Tasks Fetch</button>
-                          </Stack>
+                            <Stack height="100%" alignItems="center" justifyContent="center">
+                                <button>Tasks Fetch</button>
+                            </Stack>
                       )
                     }}
                     columns={columns}

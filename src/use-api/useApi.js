@@ -1,10 +1,8 @@
 import { database } from '../config'
 
 export const fetchGameId = () => {
-  let gameId
   const ref = database.ref('data')
-  ref.on('value', (snapshot) => {
-    gameId = snapshot.val().gameId
+  return ref.on('value', (snapshot) => {
+    return snapshot.val().gameId
   })
-  console.log(gameId)
 }

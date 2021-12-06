@@ -6,7 +6,6 @@ import { Dashboard } from '../dashboard/Dashboard'
 
 export const Routing = () => (
         <BrowserRouter>
-            <div className="container pt-4">
                 <Switch>
                     <Redirect exact from={ROUTE_INIT} to={ROUTE_WELCOMEPAGE}/>
                     <Redirect exact from={ROUTE_HOMEPAGE} to={ROUTE_WELCOMEPAGE}/>
@@ -17,8 +16,5 @@ export const Routing = () => (
                         <Dashboard/>
                     </Route>
                 </Switch>
-            </div>
         </BrowserRouter>
 )
-
-export default Routing

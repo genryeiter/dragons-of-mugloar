@@ -1,22 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { ROUTE_DASHBOARD } from '../routing/routes'
 import '../scss/style.scss'
-import axios from 'axios'
-import { Cookies } from 'react-cookie'
-import { database } from '../config'
 import background from './bg.jpeg'
 import logo from './logo.png'
+import axios from 'axios'
+import { database } from '../config'
 
 export const Welcome = () => {
-  const cookie = new Cookies()
   async function startGame () {
     const response = await axios.post('https://dragonsofmugloar.com/api/v2/game/start')
-    cookie.remove('gameId')
-    cookie.set('gameId', response?.data?.gameId, { path: '/' })
-    database.ref('data').update({
-      gameId: response?.data?.gameId
-    })
+    console.log(response.data)
+    await database.ref('data').update(response?.data)
   }
 
   const style = {
@@ -40,7 +35,7 @@ export const Welcome = () => {
                     </h1>
 
                     <div className="button-wrapper">
-                        <Link onClick={startGame} to={ROUTE_DASHBOARD}>New Game</Link>
+                        <NavLink to={ROUTE_DASHBOARD} onClick={startGame}>New Game</NavLink>
                     </div>
                     <div className="copyright">
                         Copyright © 2021. Drawings by Nele Sergejeva, editing Jaan Pullerits. <br/>

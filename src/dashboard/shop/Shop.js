@@ -2,30 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { Box, Button, Modal, Stack, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { QuickData } from '../../ui-components/quick-data/QuickData'
-import axios from 'axios'
-import { Cookies } from 'react-cookie'
-import useAxios from 'axios-hooks'
+import { buyShopItem, fetchShopList } from './shop-utils'
 import { database } from '../../config'
-import { buyShopItem, fetchShopList } from './utils'
-
-const cookie = new Cookies()
-const gameId = cookie.get('gameId')
 
 export const Shop = () => {
   const [open, setOpen] = useState(false)
   const [shopList, setShopList] = useState([])
+  const [penis, setPenis] = useState({})
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const [shoppingSuccess, setShoppingSuccess] = useState(false)
-  const [{ data }, refetch] = useAxios(
-        `https://dragonsofmugloar.com/api/v2/${gameId}/shop`
-  )
 
   useEffect(() => {
-    fetchShopList().then((res) => {
-      setShopList(res)
+    database.ref('data').on('value', snapshot => {
+      setPenis(snapshot.val().gameId)
+      fetchShopList(penis).then((res) => {
+        setShopList(res)
+      })
     })
-  }, [])
+  }, [penis])
+
   const columns = [
     { field: 'name', headerName: 'Item Name', width: 150 },
     {
@@ -39,21 +35,15 @@ export const Shop = () => {
       sortable: false,
       renderCell: (params) => {
         const onClick = async (e) => {
-          await axios.post(`https://dragonsofmugloar.com/api/v2/${gameId}/shop/buy/${params.row.id}`)
-            .then(function (res) {
-              database.ref('data').update(res.data)
-              const upd = Object.assign(res.data)
-              console.log(upd)
-              setShoppingSuccess(res.data.shoppingSuccess)
-              refetch()
-            }).catch(function (error) {
-              console.log(error, 'buying item error')
+          buyShopItem(penis, params.row.id).then((res) => {
+            setShoppingSuccess(res.shoppingSuccess)
+            fetchShopList(penis).then((res) => {
+              setShopList(res)
             })
-          buyShopItem(gameId, params.row.id)
+          })
           e.stopPropagation()
           handleOpen()
         }
-
         return <Button onClick={onClick}>Click</Button>
       }
     }
@@ -81,7 +71,7 @@ export const Shop = () => {
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
                     LoadingOverlay
-                    rows={shopList === [] ? data : shopList}
+                    rows={shopList}
                     columns={columns}
                     components={{
                       NoRowsOverlay: () => (
