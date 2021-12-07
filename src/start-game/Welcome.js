@@ -38,7 +38,7 @@ export const Welcome = () => {
                         <NavLink to={ROUTE_DASHBOARD} onClick={startGame}>New Game</NavLink>
                     </div>
                     <div className="copyright">
-                        Copyright © 2021. Drawings by Nele Sergejeva, editing Jaan Pullerits. <br/>
+                        Copyright © 2021 German Eiter. Drawings by Nele Sergejeva, editing Jaan Pullerits. <br/>
                         Background photo by Sergei Akulich on Unsplash. All rights reserved.
                     </div>
                 </div>
