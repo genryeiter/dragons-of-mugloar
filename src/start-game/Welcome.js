@@ -10,7 +10,6 @@ import { database } from '../config'
 export const Welcome = () => {
   async function startGame () {
     const response = await axios.post('https://dragonsofmugloar.com/api/v2/game/start')
-    console.log(response.data)
     await database.ref('data').update(response?.data)
   }
 

@@ -6,42 +6,37 @@ import { BiCoin, GrScorecard, IoFootstepsOutline, RiHandHeartLine } from 'react-
 
 firebase.initializeApp(firebaseConfig)
 
-const data = {}
-let quickDataItems = []
-
 export const QuickData = () => {
-  const [dataz, setData] = useState({})
+  const [data, setData] = useState({})
 
   useEffect(() => {
     firebase.database().ref('data').on('value', (snapshot) => {
       setData(snapshot.val())
     })
-    console.log(quickDataItems)
-    console.log(dataz)
-  }, [data])
+  }, [])
 
   const styles = {
     borderLeft: '1px solid rgba(224, 224, 224, 1)',
     paddingLeft: 20
   }
-  quickDataItems = [
+  const quickDataItems = [
     {
       header: 'Gold',
       info: 'Your earned amount of gold',
-      data: dataz.gold,
+      data: data.gold,
       icon: BiCoin
     },
     {
       header: 'Lives',
       info: 'Your remaining lives',
-      data: dataz.lives,
+      data: data.lives,
       icon: RiHandHeartLine,
       style: styles
     },
     {
       header: 'Turns',
       info: 'Number of moves you made',
-      data: dataz.turn,
+      data: data.turn,
       icon: IoFootstepsOutline,
       style: styles
     },
@@ -49,7 +44,7 @@ export const QuickData = () => {
       header: 'Score',
       info: 'Your amount of points earned',
       icon: GrScorecard,
-      data: dataz.score,
+      data: data.score,
       style: styles
     }
   ]
@@ -58,7 +53,7 @@ export const QuickData = () => {
             <div className="welcome-back-wrapper">
                 <div className="welcome-back">
                     <div className="">
-                        <img src={memoji} width={65}/>
+                        <img src={memoji} alt="" width={65}/>
                     </div>
                     <div className="">
                         <b>Welcome Back,&nbsp;</b>Brave Dragon Trainer!
