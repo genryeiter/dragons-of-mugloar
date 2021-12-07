@@ -98,7 +98,7 @@ export const Tasks = () => {
                     components={{
                       NoRowsOverlay: () => (
                             <Stack height="100%" alignItems="center" justifyContent="center">
-                                <button>Tasks Fetch</button>
+                                <button onClick={database.ref('data').update({ message: '' })}>Tasks Fetch</button>
                             </Stack>
                       )
                     }}
