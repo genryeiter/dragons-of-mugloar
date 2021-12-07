@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import memoji from './rexj-memoji-smile.png'
 import firebase from 'firebase/compat'
 import { firebaseConfig } from '../../config'
-// import { BiCoin, GrScorecard, IoFootstepsOutline, RiHandHeartLine } from 'react-icons/all'
+import { BiCoin, GrScorecard, IoFootstepsOutline, RiHandHeartLine } from 'react-icons/all'
 
 firebase.initializeApp(firebaseConfig)
 
@@ -28,27 +28,27 @@ export const QuickData = () => {
     {
       header: 'Gold',
       info: 'Your earned amount of gold',
-      data: dataz.gold
-      // icon: BiCoin
+      data: dataz.gold,
+      icon: BiCoin
     },
     {
       header: 'Lives',
       info: 'Your remaining lives',
       data: dataz.lives,
-      // icon: RiHandHeartLine,
+      icon: RiHandHeartLine,
       style: styles
     },
     {
       header: 'Turns',
       info: 'Number of moves you made',
       data: dataz.turn,
-      // icon: IoFootstepsOutline,
+      icon: IoFootstepsOutline,
       style: styles
     },
     {
       header: 'Score',
       info: 'Your amount of points earned',
-      // icon: GrScorecard,
+      icon: GrScorecard,
       data: dataz.score,
       style: styles
     }
@@ -80,7 +80,7 @@ export const QuickData = () => {
                                         <b>{quickDataItem.data}</b>
                                     </div>
                                     <div className="icon">
-                                        {/* <quickDataItem.icon /> */}
+                                         <quickDataItem.icon />
                                     </div>
                                     </div>
                                     <div className="small-info">

@@ -8,19 +8,19 @@ import { database } from '../../config'
 export const Shop = () => {
   const [open, setOpen] = useState(false)
   const [shopList, setShopList] = useState([])
-  const [penis, setPenis] = useState({})
+  const [shoppingSuccess, setShoppingSuccess] = useState(false)
+  const [gameId, setGameId] = useState({})
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-  const [shoppingSuccess, setShoppingSuccess] = useState(false)
 
   useEffect(() => {
     database.ref('data').on('value', snapshot => {
-      setPenis(snapshot.val().gameId)
-      fetchShopList(penis).then((res) => {
+      setGameId(snapshot.val().gameId)
+      fetchShopList(snapshot.val().gameId).then((res) => {
         setShopList(res)
       })
     })
-  }, [penis])
+  }, [gameId])
 
   const columns = [
     { field: 'name', headerName: 'Item Name', width: 150 },
@@ -35,9 +35,9 @@ export const Shop = () => {
       sortable: false,
       renderCell: (params) => {
         const onClick = async (e) => {
-          buyShopItem(penis, params.row.id).then((res) => {
+          buyShopItem(gameId, params.row.id).then((res) => {
             setShoppingSuccess(res.shoppingSuccess)
-            fetchShopList(penis).then((res) => {
+            fetchShopList(gameId).then((res) => {
               setShopList(res)
             })
           })
@@ -59,10 +59,10 @@ export const Shop = () => {
             >
                 <Box className='modal'>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        {shoppingSuccess ? 'Hurray!' : 'Oopss...'}
+                        {shoppingSuccess ? 'Hurray!' : 'Oops...'}
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        {shoppingSuccess ? 'You succesfully bought a new item from shop!' : 'You do not have enough money!'}
+                        {shoppingSuccess ? 'You successfully bought a new item from shop!' : 'You do not have enough money!'}
                     </Typography>
                 </Box>
             </Modal>

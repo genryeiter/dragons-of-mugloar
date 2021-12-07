@@ -4,48 +4,46 @@ import { DataGrid } from '@mui/x-data-grid'
 import { Box, Button, Modal, Stack, Typography } from '@mui/material'
 import '../../scss/style.scss'
 import { database, firebaseConfig } from '../../config'
-import { useHistory } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import firebase from 'firebase/compat'
 import { fetchTasks, modifyTasks, solveTask } from './tasks-utils'
-import { ROUTE_INIT } from '../../routing/routes'
+import { ROUTE_WELCOMEPAGE } from '../../routing/routes'
 
 firebase.initializeApp(firebaseConfig)
 
 export const Tasks = () => {
-  const history = useHistory()
   const [tasks, setTasks] = useState([])
-  const [penis, setPenis] = useState({})
+  const [gameId, setGameId] = useState({})
   const [open, setOpen] = useState(false)
   const [success, setSuccess] = useState(false)
   const [lives, setLives] = useState(1)
   const handleOpen = () => setOpen(true)
   const handleClose = () => {
-    firebase.database().ref('data').on('value', (snapshot) => {
-      if (lives === 0) {
-        database.ref('data').update({
-          gold: 0,
-          level: 0,
-          lives: 3,
-          score: 0,
-          gameHighScore: snapshot.val().score,
-          turn: 0
-        })
-        history.push(ROUTE_INIT)
-      }
-    })
-    setOpen(false)
+    let highScore = {}
+    if (!(lives > 0)) {
+      database.ref('data').on('value', (snapshot) => {
+        highScore = snapshot.val().score
+      })
+      database.ref('data').update({
+        gameHighScore: highScore,
+        message: ''
+      })
+    }
+    setOpen(!(lives > 0))
   }
 
   useEffect(async () => {
     await database.ref('data').on('value', snapshot => {
-      setPenis(snapshot.val().gameId)
-      if (snapshot.val().lives > 0) {
-        fetchTasks(penis).then(r => {
-          setTasks(modifyTasks(r))
+      setSuccess(snapshot.val().success)
+      setLives(snapshot.val().lives)
+      setGameId(snapshot.val().gameId)
+      if (snapshot.val().lives > 0 && snapshot.val().message !== 'You were defeated on your last mission!') {
+        fetchTasks(snapshot.val().gameId).then(res => {
+          setTasks(modifyTasks(res))
         })
       }
     })
-  }, [penis])
+  }, [gameId])
 
   const columns = [
     { field: 'message', headerName: 'Tasks', width: 500 },
@@ -62,18 +60,7 @@ export const Tasks = () => {
       sortable: false,
       renderCell: (params) => {
         const onClick = (e) => {
-          solveTask(penis, params.row.adId).then(res => {
-            console.log(res)
-            setSuccess(res?.success)
-            setLives(res?.lives)
-            console.log(res?.lives)
-            console.log(res?.success)
-            if (res?.lives > 0) {
-              fetchTasks(penis).then((res) => {
-                setTasks(modifyTasks(res))
-              })
-            }
-          })
+          solveTask(gameId, params.row.adId)
           e.stopPropagation()
           handleOpen()
         }
@@ -86,6 +73,7 @@ export const Tasks = () => {
         <>
             <Modal
                 open={open}
+                disableBackdropClick
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
@@ -93,11 +81,11 @@ export const Tasks = () => {
                 <Box className='modal'>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         {success
-                          ? 'Hurray!'
-                          : 'Oopss...'}
+                          ? ' Hurray!'
+                          : lives === 0 ? 'Oops... You were defeated!' : 'Oops!'}
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        {success ? ' You successfully solved the task!' : lives === 0 ? 'You were defeated on your last mission!' : 'You failed the task!'}
+                        {success ? ' You successfully solved the task!' : lives === 0 ? <NavLink className="new-game" to={ROUTE_WELCOMEPAGE}>New Game</NavLink> : 'You failed the task!'}
                     </Typography>
                 </Box>
             </Modal>

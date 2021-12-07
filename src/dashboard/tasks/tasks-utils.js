@@ -19,10 +19,9 @@ export const modifyTasks = (tasks) => {
   return tasks
 }
 
-export const solveTask = (gameId, adId) => {
-  console.log(`https://dragonsofmugloar.com/api/v2/${gameId}/solve/${adId}`)
+export const solveTask = async (gameId, adId) => {
   if (gameId !== '' && adId !== undefined) {
-    return axios.post(`https://dragonsofmugloar.com/api/v2/${gameId}/solve/${adId}`)
+    return await axios.post(`https://dragonsofmugloar.com/api/v2/${gameId}/solve/${adId}`)
       .then(function (res) {
         database.ref('data').update(res.data)
         return res.data
