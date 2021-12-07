@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/dragons-of-mugloar/static/css/main.21da92d1.chunk.css",
-    "main.js": "/dragons-of-mugloar/static/js/main.a51ba36a.chunk.js",
-    "main.js.map": "/dragons-of-mugloar/static/js/main.a51ba36a.chunk.js.map",
+    "main.css": "/dragons-of-mugloar/static/css/main.6728bd38.chunk.css",
+    "main.js": "/dragons-of-mugloar/static/js/main.7442b432.chunk.js",
+    "main.js.map": "/dragons-of-mugloar/static/js/main.7442b432.chunk.js.map",
     "runtime-main.js": "/dragons-of-mugloar/static/js/runtime-main.28ef726f.js",
     "runtime-main.js.map": "/dragons-of-mugloar/static/js/runtime-main.28ef726f.js.map",
     "static/js/2.bcac9da6.chunk.js": "/dragons-of-mugloar/static/js/2.bcac9da6.chunk.js",
     "static/js/2.bcac9da6.chunk.js.map": "/dragons-of-mugloar/static/js/2.bcac9da6.chunk.js.map",
     "index.html": "/dragons-of-mugloar/index.html",
-    "static/css/main.21da92d1.chunk.css.map": "/dragons-of-mugloar/static/css/main.21da92d1.chunk.css.map",
+    "static/css/main.6728bd38.chunk.css.map": "/dragons-of-mugloar/static/css/main.6728bd38.chunk.css.map",
     "static/js/2.bcac9da6.chunk.js.LICENSE.txt": "/dragons-of-mugloar/static/js/2.bcac9da6.chunk.js.LICENSE.txt",
     "static/media/bg.1e01580a.jpeg": "/dragons-of-mugloar/static/media/bg.1e01580a.jpeg",
     "static/media/icon-dragon-27.fca3793c.png": "/dragons-of-mugloar/static/media/icon-dragon-27.fca3793c.png",
@@ -18,7 +18,7 @@
   "entrypoints": [
     "static/js/runtime-main.28ef726f.js",
     "static/js/2.bcac9da6.chunk.js",
-    "static/css/main.21da92d1.chunk.css",
-    "static/js/main.a51ba36a.chunk.js"
+    "static/css/main.6728bd38.chunk.css",
+    "static/js/main.7442b432.chunk.js"
   ]
 }
